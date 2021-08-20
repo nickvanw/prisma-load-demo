@@ -1,0 +1,23 @@
+// Barebones PlanetScale Prisma Configuration
+// See https://davidparks.dev/blog/planetscale-deployment-with-prisma/ for more
+
+datasource db {
+  provider = "mysql"
+  url = env("DATABASE_URL")
+  planetScaleMode = true
+}
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["planetScaleMode"]
+}
+
+// Schema
+
+model Data {
+  id Int @default(autoincrement()) @id
+  createdAt DateTime @default(now())
+
+  data String
+  hostname String
+}
