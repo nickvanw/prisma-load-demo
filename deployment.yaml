@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ps-dbload-prisma
+spec:
+  replicas: 300
+  selector:
+    matchLabels:
+      app: ps-dbload-prisma
+  template:
+    metadata:
+      labels:
+        app: ps-dbload-prisma
+    spec:
+      containers:
+      - name: dbload
+        image: registry.digitalocean.com/ps-demo-registry/dbload:prisma
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: database
+              key: url
